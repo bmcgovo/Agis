@@ -1,0 +1,83 @@
+/* frontend/src/assets/accessibility.css */
+:root {
+    --wcag-primary: #0056b3;
+    --wcag-primary-contrast: #ffffff;
+    --wcag-focus: 0 0 0 3px rgba(0, 86, 179, 0.5);
+  }
+  
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    :root {
+      --wcag-primary: #002d62;
+      --wcag-primary-contrast: #ffffff;
+    }
+  }
+  
+  /* WCAG 2.1 AA compliant focus states */
+  [tabindex="0"]:focus,
+  input:focus,
+  button:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    box-shadow: var(--wcag-focus);
+  }
+  
+  /* Screen reader utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+  
+  .aria-live {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  
+  /* Semantic HTML enhancements */
+  [role="button"] {
+    cursor: pointer;
+  }
+  
+  /* Motion reduction */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* AGIS-compliant typography */
+  body {
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+  }
+  
+  h1, h2, h3 {
+    letter-spacing: 0.25px;
+  }
+  
+  /* Contrast ratios meeting AA standards */
+  a {
+    color: var(--wcag-primary);
+    text-decoration: underline;
+  }
+  
+  button {
+    background-color: var(--wcag-primary);
+    color: var(--wcag-primary-contrast);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+  }
+  

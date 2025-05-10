@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  app:
+    image: my-agis-app:${TAG:-latest}
+    build:
+      context: .
+      target: prod
+      args:
+        - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M,mode=1777
+    networks:
+      - agis-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+
+  postgres:
+    image: postgres:15-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: cert
+      POSTGRES_SSL_CERT_FILE: /run/secrets/db-cert
+      POSTGRES_SSL_KEY_FILE: /run/secrets/db-key
+    secrets:
+      - db-cert
+      - db-key
+    networks:
+      - agis-net
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  agis-net:
+    driver: bridge
+    internal: true
+
+secrets:
+  db-cert:
+    file: ./secrets/db.crt
+  db-key:
+    file: ./secrets/db.key
+
+volumes:
+  pgdata:
