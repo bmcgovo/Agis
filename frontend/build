@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@vue/tsconfig": "^0.7.0",
+    "vue-tsc": "^2.2.10"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.5"
+  },
+  "scripts": {
+    "build": "vite build"
+  }
+}

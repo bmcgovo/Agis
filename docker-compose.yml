@@ -23,6 +23,23 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
 
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: cert
+    volumes:
+      - ./certs/server:/var/lib/postgresql:ro
+      - ./postgres-config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./postgres-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql/postgresql.conf
+      - -c
+      - hba_file=/etc/postgresql/pg_hba.conf
+    networks:
+      - agis-net
+
   postgres:
     image: postgres:15-alpine
     volumes:
@@ -52,6 +69,3 @@ secrets:
     file: ./secrets/db.crt
   db-key:
     file: ./secrets/db.key
-
-volumes:
-  pgdata:

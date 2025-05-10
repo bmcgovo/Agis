@@ -8,6 +8,14 @@
     ref="fileInput"
     :disabled="!hasWritePermissions"
   />
+
+<!-- EvidenceUpload.vue -->
+
+  <input type="file" @change="handleUpload" required>
+  <div v-if="item" class="custody-chain">
+    <p>Logged by: {{ currentUser }} at {{ new Date().toISOString() }}</p>
+    <p>Previous handler: {{ item.lastHandler }}</p>
+  </div>
 </template>
 
 <script setup>
@@ -45,3 +53,8 @@ const handleEvidenceUpload = async (event) => {
   }
 }
 </script>
+<style scoped>
+.evidence-upload {
+  margin: 2rem;
+}
+</style>
