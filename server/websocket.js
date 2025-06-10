@@ -1,6 +1,7 @@
 // server/websocket.js
 import WebSocket from 'ws'
-import { validateJWT } from './auth'
+// Import verifyCaseAccess to ensure authorization checks work
+import { validateJWT, verifyCaseAccess } from './auth'
 
 const wss = new WebSocket.Server({ noServer: true })
 
