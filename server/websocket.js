@@ -1,6 +1,6 @@
 // server/websocket.js
 import WebSocket from 'ws'
-import { validateJWT } from './auth'
+import { validateJWT, verifyCaseAccess } from './auth'
 
 const wss = new WebSocket.Server({ noServer: true })
 
@@ -27,8 +27,7 @@ wss.on('close', () => {
 })
 wss.on('error', (error) => {
   console.error('WebSocket error:', error)
-}
-)
+})
 export default wss
 
 
